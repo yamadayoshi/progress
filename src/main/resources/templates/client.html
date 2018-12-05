@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  	<!-- Bootstrap CSS -->
+  	<link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+
+  	<link rel="stylesheet" th:href="@{/css/style.css}">
+  	
+  	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet"> 
+	
+  	<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/script.js}"></script>
+  	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-white" style="background-color: #ffffff;">
+	  <a class="navbar-brand" href="#">Progress</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
+	      </li>    
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Cadastros
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="http://localhost:8080/client/">Clientes</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>   
+	        </div>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+	
+	<div class="row header rounded">
+		<div class="col-md header-title">
+	    	<label>Lista de clientes</label>
+	    </div>
+
+	    <div class="col-sm input-group header-input flex-column">
+	    	<form class="db-search d-flex">    		
+	    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">    		
+	    	</form>
+	    </div>
+   	</div>
+
+  	<div class="screen rounded">    	
+	    <div class="col-12 col-md-12 db-content default-table table-wrapper-scroll-y">
+	      <table class="table-striped table-sm">
+	        <thead>
+	          <tr>
+	            <th class="col-1" scope="col">ID</th>
+	            <th class="col-2" scope="col">Name</th>
+	            <th class="col-2" scope="col">CPF/CNPJ</th>
+	            <th class="col-3" scope="col">Email</th>
+	            <th class="col-2" scope="col">Phone</th>
+	            <th class="col-1 th-sm" scope="col"></th>
+	            <th class="col-1 th-sm" scope="col"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <tr id="row-client" th:each="client : ${clients}">
+	            <td th:text="${client.clientId}"></td>
+	            <td class="client-name" th:text="${client.clientName}"></td>
+	            <td th:text="${client.clientCnpjCpf}"></td>
+	            <td th:text="${client.clientEmail}"></td>
+	            <td th:text="${client.clientPhone}"></td>
+	            <td><button type="button" class="btn-sm btn btn-primary" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Edit</button></td>
+	            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+	          </tr>  
+	        </tbody>
+	      </table>
+	    </div>
+  
+	    <a href="http://localhost:8080/client/form/add/" class="float-button-new">
+	      <i class="fa fa-plus my-float"></i><img th:src="@{/plus.png}" height="60px">
+	    </a>  
+  </div>  
+  
+   <!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        Do you really want to delete?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary btn-delete-confirm">Delete</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+  
+  <script type="text/javascript" >
+  	var id;
+  
+    $("tr").click(function() {
+	  //adiciona classe selected na linha
+	  $(this).addClass('selected-row').siblings().removeClass('selected-row');
+	});
+    
+	$("tbody tr").dblclick(function() {
+	  window.open("http://localhost:8080/client/form/update/" + $(this).find("td:first").html(), "_self");	  	  
+	});
+	
+	$(".btn-delete").click(function(){			
+ 	  id = $(this).closest('tr').find('td:first').html(); 	  
+	});
+	
+	$(".btn-delete-confirm").click(function(){
+		window.open("http://localhost:8080/client/remove/" + id, "_self");
+	});
+	
+	function search() {
+		var input, filter,td;
+		input = document.getElementById("inputSearch");
+		console.log(input.value);
+		
+		td = document.getElementsByClassName("client-name");
+		
+		for (i = 0; i < td.length; i++){
+			if (td[i].innerHTML.toUpperCase().indexOf(input.value.toUpperCase()) != -1) {
+				td[i].closest('tr').style.display = "";
+			}				
+			else {
+				td[i].closest('tr').style.display = "none";	
+			}			
+		}		
+	}	
+  </script>
+</body>
+</html>

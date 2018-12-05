@@ -1,0 +1,154 @@
+@charset "UTF-8";
+
+/* general */
+
+html {
+	height: 100%;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {	
+	background: linear-gradient(to bottom, #d4c6c6, #416A86);
+	height: 100%;	
+}
+
+.screen {			
+	margin-top: 2px;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 40px;
+	/*box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.50);*/
+	height: 78%;
+    overflow: hidden;
+    white-space: nowrap;    
+}
+
+/* menu */
+ 
+.menu {
+	background: #1aa3ff;
+	overflow: hidden;
+	padding: 8px;
+}
+
+.menu-ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.menu-item {
+	margin: 2px;
+	width: 100px;
+	padding: 3px;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+
+/* updates */
+
+.form-layout {
+	padding: 10px;
+}
+
+.form-item {
+	margin-top: 10px;
+}
+
+li a {
+	display: block;
+	text-decoration: none;
+}
+
+/* header */
+
+.header {
+	background: #7e4eff;
+	height: 12%;	
+	margin-top: 10px;
+	margin-left: 40px;
+	margin-right: 40px;	
+	font-family: 'Merriweather Sans', sans-serif;
+	/*box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.50);*/	
+}
+
+.header-title {
+	font-size: 20px;
+	margin: auto;
+}
+
+.header-input {
+	
+	align-content: stretch;
+}
+
+.side-menu {
+	/* width: 20%; 	
+	float: left; */
+	border-right: 1px grey solid;
+	background: white;
+	/* display: flex; */
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.side-menu-item {
+	width: 90%;
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* table design */
+
+table {
+  width: 100%;  
+  height: 100%;
+  margin: auto;  
+}
+
+th, td {
+  border-bottom: 1px solid #bab4b4;	    	
+}
+
+.default-table {
+  /* width: 80%;  
+  float: right; */
+  padding: 5px 10px 5px 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  line-height: 2.1;  
+  background: white;  
+  overflow: hidden;
+}
+
+.table-wrapper-scroll-y {
+	display: block;	
+	max-height: 100%;
+	overflow-y: auto;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.selected-row {
+  background: #CFD8DC;  
+  color: black;
+}
+
+/* float button */
+.float-button-new{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:20px;
+	right:20px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:28px;
+}
