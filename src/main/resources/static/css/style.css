@@ -13,12 +13,11 @@ body {
 }
 
 .screen {			
-	margin-top: 2px;
 	margin-left: 40px;
 	margin-right: 40px;
 	margin-bottom: 40px;
 	/*box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.50);*/
-	height: 78%;
+	height: 73%;
     overflow: hidden;
     white-space: nowrap;    
 }
@@ -65,22 +64,27 @@ li a {
 
 .header {
 	background: #7e4eff;
-	height: 12%;	
+	height: 10%;	
 	margin-top: 10px;
+	margin-bottom: 3px;	
 	margin-left: 40px;
 	margin-right: 40px;	
-	font-family: 'Merriweather Sans', sans-serif;
 	/*box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.50);*/	
 }
 
-.header-title {
-	font-size: 20px;
+.header-title {	
+	vertical-align: middle;
 	margin: auto;
+	align-items: flex-start;	
+	font-size: 20px;
+	font-family: 'Merriweather Sans', sans-serif;
 }
 
 .header-input {
-	
-	align-content: stretch;
+	align-items: flex-end;
+	vertical-align: middle;
+	padding-top: 0px;
+	margin: auto;
 }
 
 .side-menu {
@@ -113,8 +117,6 @@ th, td {
 }
 
 .default-table {
-  /* width: 80%;  
-  float: right; */
   padding: 5px 10px 5px 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;

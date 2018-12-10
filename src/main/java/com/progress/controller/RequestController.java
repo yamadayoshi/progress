@@ -1,15 +1,18 @@
 package com.progress.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.progress.classes.Client;
 import com.progress.classes.Request;
@@ -18,10 +21,36 @@ import com.progress.repository.RequestRepository;
 
 @Controller
 @RequestMapping("/request")
+@SessionAttributes("request")
 public class RequestController {
 	
 	@Autowired
 	private RequestRepository requestRepository;
+	
+	@GetMapping("/") 
+	public String getHomeRequest(Model model) {
+		ArrayList<Request> requestList = new ArrayList<>();
+		
+		requestList = (ArrayList<Request>) requestRepository.findAll();
+		
+		model.addAttribute("request", requestList);
+		
+		return "request";
+	}
+	
+//	@PostMapping(value="/")
+//	public String postHomeRequest() {
+//		
+//	}
+	
+	@GetMapping("/form/add")
+	public String getAddFormRequest(Model model) {
+		Request request = new Request();
+		
+		model.addAttribute(request);
+		
+		return "request_register";
+	}
 	
 	@GetMapping("/add")
 	public String addRequest(@RequestParam String title, @RequestParam String clientDescription, @RequestParam String devDescription, @RequestParam int clientId, @RequestParam int screenId) {
@@ -36,7 +65,7 @@ public class RequestController {
 		
 		requestRepository.save(request);
 		
-		return "redirect:/client/";
+		return "screen";
 	}
 	
 	@GetMapping("/update/{id}")

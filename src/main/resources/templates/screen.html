@@ -42,14 +42,21 @@
 	  </div>
 	</nav>
 
+	<div class="row header rounded">
+		<div class="col-md header-title">
+	    	<label>Screen</label>
+	    </div>
+
+	    <div class="col-md input-group header-input flex-column">
+	    	<form class="db-search d-flex" style="width:50%;">	    		
+	    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">    		
+	    	</form>
+	    </div>
+   	</div>   	
+	
   <div class="screen">
-    <div class="col-12 col-md-2 db-sidebar side-menu">
-    	<form class="db-search d-flex align-items-center" style="margin-top: 5px">    		
-    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">    		
-    	</form>
-    </div>
     <div class="col-12 col-sm-12 db-content default-table table-wrapper-scroll-y">
-      <table id="scroll" class="table-striped table-sm">
+      <table id="scroll" class="table-sm">
         <thead>
           <tr role="row">
             <th class="col-1 th-sm" scope="col">ID</th>

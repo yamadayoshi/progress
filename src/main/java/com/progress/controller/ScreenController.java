@@ -30,11 +30,11 @@ public class ScreenController {
 	
 	@GetMapping("/")
 	public String getHomeScreen(Model model) {
-		ArrayList<Screen> screen = new ArrayList<>();
+		ArrayList<Screen> screenList = new ArrayList<>();
 		
-		screen = (ArrayList<Screen>) screenRepository.findAll();
+		screenList = (ArrayList<Screen>) screenRepository.findAll();
 		
-		model.addAttribute("screen", screen);
+		model.addAttribute("screen", screenList);
 		
 		return "screen";
 	}
