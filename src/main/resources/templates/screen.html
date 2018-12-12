@@ -19,15 +19,12 @@
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	
+
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
 	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
-	      </li>    
+	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          Cadastros
@@ -35,7 +32,7 @@
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href="http://localhost:8080/client/">Clientes</a>
 	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>   
+	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>
 	        </div>
 	      </li>
 	    </ul>
@@ -48,12 +45,12 @@
 	    </div>
 
 	    <div class="col-md input-group header-input flex-column">
-	    	<form class="db-search d-flex" style="width:50%;">	    		
-	    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">    		
+	    	<form class="db-search d-flex" style="width:50%;">
+	    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">
 	    	</form>
 	    </div>
-   	</div>   	
-	
+   	</div>
+
   <div class="screen">
     <div class="col-12 col-sm-12 db-content default-table table-wrapper-scroll-y">
       <table id="scroll" class="table-sm">
@@ -70,20 +67,19 @@
           <tr id="row-screen" th:each="screen : ${screen}">
             <td th:text="${screen.ScreenId}"></td>
             <td class="screen-name" th:text="${screen.screenName}"></td>
-            <td th:text="${screen.screenDescription}"></td>            
-            <td><button type="button" class="btn-sm btn btn-primary
-            " style="width:70px;">Edit</button></td>
-            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>            
-          </tr>  
+            <td th:text="${screen.screenDescription}"></td>
+            <td><button type="button" class="btn-sm btn btn-primary btn-edit" style="width:70px;">Edit</button></td>
+            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
-  
+
     <a href="http://localhost:8080/screen/form/add/" class="float-button-new">
       <i class="fa fa-plus my-float"></i><img th:src="@{/plus.png}" height="60px">
-    </a>  
-  </div>  
-  
+    </a>
+  </div>
+
    <!-- Modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -105,42 +101,46 @@
 	  </div>
 	</div>
 
-  
+
   <script type="text/javascript" >
   	var id;
-  
+
     $("tr").click(function() {
 	  //adiciona classe selected na linha
 	  $(this).addClass('selected-row').siblings().removeClass('selected-row');
 	});
-    
+
 	$("tbody tr").dblclick(function() {
-	  window.open("http://localhost:8080/screen/form/update/" + $(this).find("td:first").html(), "_self");	  	  
+	  window.open("http://localhost:8080/screen/form/update/" + $(this).find("td:first").html(), "_self");
 	});
-	
-	$(".btn-delete").click(function(){			
- 	  id = $(this).closest('tr').find('td:first').html(); 	  
+
+    $(".btn-edit").click(function(){
+    	window.open("http://localhost:8080/screen/form/update/" + $(this).closest('tr').find('td:first').html(), "_self")
+    });	
+    
+	$(".btn-delete").click(function(){
+ 	  id = $(this).closest('tr').find('td:first').html();
 	});
-	
+
 	$(".btn-delete-confirm").click(function(){
-		window.open("http://localhost:8080/screen/remove/" + id, "_self");
+		window.open("http://localhost:8080/screen/delete/" + id, "_self");
 	});
-	
+
 	function search() {
 		var input, filter,td;
 		input = document.getElementById("inputSearch");
 		console.log(input.value);
-		
+
 		td = document.getElementsByClassName("screen-name");
-		
+
 		for (i = 0; i < td.length; i++){
 			if (td[i].innerHTML.toUpperCase().indexOf(input.value.toUpperCase()) != -1) {
 				td[i].closest('tr').style.display = "";
-			}				
+			}
 			else {
-				td[i].closest('tr').style.display = "none";	
-			}			
-		}		
+				td[i].closest('tr').style.display = "none";
+			}
+		}
 	}
   </script>
 </body>

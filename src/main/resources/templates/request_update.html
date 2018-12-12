@@ -7,9 +7,8 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
-
-
   <link rel="stylesheet" th:href="@{/css/style.css}">
+
   <script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
   <body>
@@ -39,28 +38,44 @@
 	</nav>
 
 	<div class="form-layout">
-	  <form action="#" th:object="${client}" method="post">
+	  <form action="#" th:object="${request}" method="post">
 	    <div class="form-item">
-	      <label>Name</label><br>
-	      <input type="text" name="clientName" th:field="*{clientName}" placeholder="Name">
-	      <label th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}">Name error</label>
+	      <label>Title</label><br>
+	      <input type="text" name="title" th:field="*{requestTitle}" placeholder="title">
 	    </div>
 
 	    <div class="form-item">
-          <label>CPF/CNPJ</label><br>
-	      <input type="text" name="clientDoc" th:field="*{clientCnpjCpf}" placeholder="Document">
-	      <label th:if="${#fields.hasErrors('clientCnpjCpf')}" th:errors="*{clientCnpjCpf}">Doc error</label>
+          <label>Problem description client</label><br>
+          <textarea rows="5" cols="50" name="clientDescription" th:field="*{requestClientDescription}" placeholder="client description"></textarea>
 	    </div>
 
 	    <div class="form-item">
-		  <label>Email</label><br>
-		  <input type="email" name="clientEmail" th:field="*{clientEmail}" placeholder="Email">
+		  <label>Problem description developer</label><br>
+          <textarea rows="5" cols="50" name="developerDescription" th:field="*{requestDevDescription}" placeholder="developer description"></textarea>
+	    </div>
+	    
+	    <div class="form-item" >
+		  <label>Client</label><br>
+          <select th:field="*{requestClient}">          
+          	<option th:each="client : ${client}" th:text="${client.clientId + ' - ' + client.clientName}" th:value="${client.clientId}"></option>
+          </select>
+	    </div>
+	    
+	    <div class="form-item" >
+		  <label>Screen</label><br>
+          <select th:field="*{requestScreen}">          
+          	<option th:each="screen : ${screen}" th:text="${screen.screenId + ' - ' + screen.screenName}" th:value="${screen.screenId}"></option>
+          </select>
 	    </div>
 
-	    <div class="form-item">
-	      <label>Phone</label><br>
-	      <input type="tel" name="clientPhone" th:field="*{clientPhone}" placeholder="Phone">
-	    </div>
+	    <div class="form-item" >
+		  <label>Status</label><br>
+          <select th:field="*{status}">          
+          	<option value="Open">Open</option>
+          	<option value="Running">Running</option>
+          	<option value="Closed">Closed</option>
+          </select>
+	    </div>    	        
 
 	    <p class="form-item">
 	      <input type="submit" value="Atualizar">

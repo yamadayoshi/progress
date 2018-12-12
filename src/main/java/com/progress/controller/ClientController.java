@@ -32,11 +32,11 @@ public class ClientController {
 	
 	@GetMapping("/")
 	public String getHomeClient(Model model) {
-		ArrayList<Client> clientList = new ArrayList<>();
+		Iterable<Client> clientList = new ArrayList<>();
 		
-		clientList = (ArrayList<Client>) clientRepository.findAll();
+		clientList = clientRepository.findAll();
 				
-		model.addAttribute("clients", clientList);
+		model.addAttribute("client", clientList);
 		
 		return "client";
 	}
@@ -135,7 +135,7 @@ public class ClientController {
 		return "redirect:/client/";		
 	}
 	
-	@GetMapping("/remove/{id}")
+	@GetMapping("/delete/{id}")
 	public String removeClient(@PathVariable("id") int id) {
 		clientRepository.deleteById(id);
 		

@@ -4,11 +4,11 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
-  <!-- Bootstrap CSS -->	
-  <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/> 
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
   <link rel="stylesheet" th:href="@{/css/style.css}">
-  
+
   <script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
   <body>
@@ -17,15 +17,12 @@
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	
+
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
 	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
-	      </li>    
+	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          Cadastros
@@ -33,39 +30,57 @@
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href="http://localhost:8080/client/">Clientes</a>
 	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>   
+	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>
 	        </div>
 	      </li>
 	    </ul>
 	  </div>
 	</nav>
-	
-	<div class="form-layout">			
+
+	<div class="form-layout">
 	  <form action="#" th:object="${request}" method="post">
 	    <div class="form-item">
 	      <label>Title</label><br>
 	      <input type="text" name="title" th:field="*{requestTitle}" placeholder="title">
 	    </div>
-	    
+
 	    <div class="form-item">
           <label>Problem description client</label><br>
-          <textarea rows="5" cols="50" name="clientDescription" th:field="*{requestClientDescription}" placeholder="client description"></textarea>         
+          <textarea rows="5" cols="50" name="clientDescription" th:field="*{requestClientDescription}" placeholder="client description"></textarea>
 	    </div>
-	    
+
 	    <div class="form-item">
 		  <label>Problem description developer</label><br>
           <textarea rows="5" cols="50" name="developerDescription" th:field="*{requestDevDescription}" placeholder="developer description"></textarea>
 	    </div>
 	    
-	    <!-- <div class="form-item">
-	      <label>Client</label><br>
-	      <input type="sele" name="clientPhone" th:field="*{clientPhone}" placeholder="Phone">
-	    </div> -->
+	    <div class="form-item" >
+		  <label>Client</label><br>
+          <select th:field="*{requestClient}">          
+          	<option th:each="client : ${client}" th:text="${client.clientId + ' - ' + client.clientName}" th:value="${client.clientId}"></option>
+          </select>
+	    </div>
+	    
+	    <div class="form-item" >
+		  <label>Screen</label><br>
+          <select th:field="*{requestScreen}">          
+          	<option th:each="screen : ${screen}" th:text="${screen.screenId + ' - ' + screen.screenName}" th:value="${screen.screenId}"></option>
+          </select>
+	    </div>
+	    
+	    <div class="form-item" >
+		  <label>Status</label><br>
+          <select th:field="*{status}">          
+          	<option value="Open">Open</option>
+          	<option value="Running">Running</option>
+          	<option value="Closed">Closed</option>
+          </select>
+	    </div>    
 	    
 	    <p class="form-item">
 	      <input type="submit" value="Registrar chamado">
 	    </p>
-	  </form>					
-	</div>		
+	  </form>
+	</div>
   </body>
 </html>

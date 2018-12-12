@@ -4,11 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.progress.classes.Client;
 import com.progress.classes.Request;
 import com.progress.classes.Screen;
+import com.progress.repository.ClientRepository;
 import com.progress.repository.RequestRepository;
+import com.progress.repository.ScreenRepository;
 
 @Controller
 @RequestMapping("/request")
@@ -26,12 +32,16 @@ public class RequestController {
 	
 	@Autowired
 	private RequestRepository requestRepository;
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired	
+	private ScreenRepository screenRepository;
 	
 	@GetMapping("/") 
 	public String getHomeRequest(Model model) {
-		ArrayList<Request> requestList = new ArrayList<>();
+		Iterable<Request> requestList = new ArrayList<>();
 		
-		requestList = (ArrayList<Request>) requestRepository.findAll();
+		requestList = requestRepository.findAll();
 		
 		model.addAttribute("request", requestList);
 		
@@ -46,10 +56,53 @@ public class RequestController {
 	@GetMapping("/form/add")
 	public String getAddFormRequest(Model model) {
 		Request request = new Request();
+		Iterable<Client> clientList = new ArrayList<>();
+		Iterable<Screen> screenList = new ArrayList<>();
+		
+		clientList = clientRepository.findAll();
+		screenList = screenRepository.findAll();
+		
+		request.setStatus("Open");
+		request.setRequestEntryDate(LocalDateTime.now());
 		
 		model.addAttribute(request);
+		model.addAttribute("client", clientList);
+		model.addAttribute("screen", screenList);
 		
 		return "request_register";
+	}
+	
+	@PostMapping(value="/form/add")
+	public String postAddFormRequest(@ModelAttribute("request") Request request) {
+		requestRepository.save(request);
+		
+		return "redirect:/request/";
+	}
+	
+	@GetMapping("/form/update/{id}")
+	public String getUpdateFormRequest(@PathVariable("id") int id, Model model) {
+		Optional<Request> updateRequest = requestRepository.findById(id);
+		Iterable<Client> clientList = new ArrayList<>();
+		Iterable<Screen> screenList = new ArrayList<>();
+		
+		Request request = updateRequest.get();
+		clientList = clientRepository.findAll();
+		screenList = screenRepository.findAll();		
+		
+		model.addAttribute(request);
+		model.addAttribute("client", clientList);
+		model.addAttribute("screen", screenList);		
+		
+		return "request_update";
+	}
+	
+	@PostMapping("/form/update/{id}")
+	public String postFormUpdateRequest(@PathVariable("id") int id, HttpServletRequest serveletRequest, @ModelAttribute("request") Request request) {
+		requestRepository.save(request);
+		
+		serveletRequest.getSession().setAttribute("request", null);
+		
+		return "redirect:/request/"; 		
 	}
 	
 	@GetMapping("/add")
@@ -102,14 +155,14 @@ public class RequestController {
 		
 		requestRepository.save(request);
 		
-		return "redirect:/client/";		
+		return "redirect:/request/";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String deleteRequest(@PathVariable("id") int id) {
 		requestRepository.deleteById(id);
 		
-		return "redirect:/client/";		
+		return "redirect:/request/";	
 	}
 	
 	@GetMapping("/all")

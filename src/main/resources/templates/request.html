@@ -27,9 +27,6 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
 	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
 	      </li>
 	      <li class="nav-item dropdown">
@@ -82,8 +79,8 @@
 	            <td th:text="${{request.requestEntryDate}}"></td>
 	            <td th:text="${request.requestClient.clientName}"></td>
               	<td th:text="${request.requestScreen.screenName}"></td>
-              	<td th:text="${request.status}"></td>              	
-	            <td><button type="button" class="btn-sm btn btn-primary" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Edit</button></td>
+              	<td th:text="${request.status}"></td>
+	            <td><button type="button" class="btn-sm btn btn-primary btn-edit" style="width:70px;">Edit</button></td>
 	            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
 	          </tr>
 	        </tbody>
@@ -126,7 +123,11 @@
 	});
 
 	$("tbody tr").dblclick(function() {
-	  window.open("http://localhost:8080/client/form/update/" + $(this).find("td:first").html(), "_self");
+	  window.open("http://localhost:8080/request/form/update/" + $(this).find("td:first").html(), "_self");
+	});
+	
+	$(".btn-edit").click(function(){
+		window.open("http://localhost:8080/request/form/update/" + $(this).closest('tr').find("td:first").html(), "_self");		
 	});
 
 	$(".btn-delete").click(function(){
@@ -134,7 +135,7 @@
 	});
 
 	$(".btn-delete-confirm").click(function(){
-		window.open("http://localhost:8080/client/remove/" + id, "_self");
+		window.open("http://localhost:8080/request/delete/" + id, "_self");
 	});
 
 	function search() {

@@ -4,11 +4,11 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
-  <!-- Bootstrap CSS -->	
+
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
- 
- 
+
+
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
@@ -18,15 +18,12 @@
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	
+
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
 	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
-	      </li>    
+	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          Cadastros
@@ -34,30 +31,30 @@
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="dropdown-item" href="http://localhost:8080/client/">Clientes</a>
 	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>   
+	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>
 	        </div>
 	      </li>
 	    </ul>
 	  </div>
 	</nav>
-	
-	<div class="form-layout">			
+
+	<div class="form-layout">
 	  <form action="#" th:object="${screen}" method="post">
 	    <div class="form-item">
 	      <label>Name</label><br>
 	      <input type="text" name="screenName" th:field="*{screenName}" placeholder="Name">
 	      <label th:if="${#fields.hasErrors('screenName')}" th:errors="*{screenName}">Name error</label>
 	    </div>
-	    
+
 	    <div class="form-item">
           <label>Description</label><br>
 	      <input type="text" name="screenDescription" th:field="*{screenDescription}" placeholder="Description">
 	      <label th:if="${#fields.hasErrors('screenDescription')}" th:errors="*{screenDescription}">Doc error</label>
-	    </div>	    
+	    </div>
 	    <p class="form-item">
 	      <input type="submit" value="Cadastrar">
 	    </p>
-	  </form>					
-	</div>		
+	  </form>
+	</div>
   </body>
 </html>

@@ -30,9 +30,9 @@ public class ScreenController {
 	
 	@GetMapping("/")
 	public String getHomeScreen(Model model) {
-		ArrayList<Screen> screenList = new ArrayList<>();
+		Iterable<Screen> screenList = new ArrayList<>();
 		
-		screenList = (ArrayList<Screen>) screenRepository.findAll();
+		screenList = screenRepository.findAll();
 		
 		model.addAttribute("screen", screenList);
 		
@@ -89,7 +89,7 @@ public class ScreenController {
 		
 		screenRepository.save(screen);
 		
-		return "redirect:/client/";
+		return "redirect:/screen/";
 	}
 	
 	@GetMapping("/update/{id}")
@@ -110,14 +110,14 @@ public class ScreenController {
 
 		screenRepository.save(screen);
 		
-		return "redirect:/client/";		
+		return "redirect:/screen/";		
 	}
 	
-	@GetMapping("delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteScreen(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
 		
-		return "redirect:/client/";
+		return "redirect:/screen/";
 	}
 	
 	@GetMapping("/all")
