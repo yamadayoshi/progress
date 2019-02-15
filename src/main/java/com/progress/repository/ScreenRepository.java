@@ -2,7 +2,7 @@ package com.progress.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.progress.classes.Screen;
+import com.progress.model.Screen;
 
 public interface ScreenRepository extends CrudRepository<Screen, Integer>{
 

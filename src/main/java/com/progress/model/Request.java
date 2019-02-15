@@ -1,4 +1,4 @@
-package com.progress.classes;
+package com.progress.model;
 
 import java.time.LocalDateTime;
 

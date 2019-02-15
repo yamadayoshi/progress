@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+  <link rel="stylesheet" th:href="@{/resources/css/bootstrap.css}"/>
 
 
-  <link rel="stylesheet" th:href="@{/css/style.css}">
-  <script type="text/javascript" th:src="@{/js/script.js}"></script>
+  <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+  <script type="text/javascript" th:src="@{/resources/js/script.js}"></script>
 </head>
   <body>
 	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3b85b4;">
@@ -39,7 +39,7 @@
 	</nav>
 
 	<div class="form-layout">
-	  <form action="#" th:object="${screen}" method="post">
+	  <form th:action="@{/screen/form/add/}" th:object="${screen}" method="post">
 	    <div class="form-item">
 	      <label>Name</label><br>
 	      <input type="text" name="screenName" th:field="*{screenName}" placeholder="Name">

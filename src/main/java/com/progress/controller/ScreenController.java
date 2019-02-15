@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.progress.classes.Screen;
+import com.progress.model.Screen;
 import com.progress.repository.ScreenRepository;
 
 @Controller

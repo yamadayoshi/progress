@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.progress.classes.Client;
+import com.progress.model.Client;
 import com.progress.repository.ClientRepository;
 
 @Controller
@@ -82,7 +82,6 @@ public class ClientController {
 	
 	@PostMapping("/form/update/{id}")
 	public String postUpdateFormClient(@PathVariable("id") int id, HttpServletRequest request, @ModelAttribute("client") Client client) {		
-
 		clientRepository.save(client);
 		
 		// limpa o atributo model
@@ -142,8 +141,19 @@ public class ClientController {
 		return "redirect:/client/";
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("/api/all")
 	public @ResponseBody Iterable<Client> allClient() {
+	
 		return clientRepository.findAll();
+	}
+	
+	@GetMapping("/api/totalCount")
+	public @ResponseBody Iterable<Long> totalCount() {
+		return clientRepository.totalCount();
+	}
+	
+	@GetMapping("/api/findByClientName")
+	public @ResponseBody Iterable<Client> findByClientName(@RequestParam String name) {
+		return clientRepository.findByClientName(name);
 	}
 }

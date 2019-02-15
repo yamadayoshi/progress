@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.progress.classes.Client;
-import com.progress.classes.Request;
-import com.progress.classes.Screen;
+import com.progress.model.Client;
+import com.progress.model.Request;
+import com.progress.model.Screen;
 import com.progress.repository.ClientRepository;
 import com.progress.repository.RequestRepository;
 import com.progress.repository.ScreenRepository;
@@ -105,7 +105,7 @@ public class RequestController {
 		return "redirect:/request/"; 		
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("api/add")
 	public String addRequest(@RequestParam String title, @RequestParam String clientDescription, @RequestParam String devDescription, @RequestParam int clientId, @RequestParam int screenId) {
 		Request request = new Request();
 		request.setRequestTitle(title);
@@ -121,7 +121,7 @@ public class RequestController {
 		return "screen";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("api/update/{id}")
 	public String updateRequest(@PathVariable("id") int id, @RequestParam(required=false) String title, @RequestParam(required=false) String clientDescription, @RequestParam(required=false) String devDescription, @RequestParam(required=false) String clientId, @RequestParam(required=false) String screenId) {
 		// recupera o request
 		Optional<Request> updateRequest = requestRepository.findById(id);		
@@ -158,15 +158,35 @@ public class RequestController {
 		return "redirect:/request/";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("api/delete/{id}")
 	public String deleteRequest(@PathVariable("id") int id) {
 		requestRepository.deleteById(id);
 		
 		return "redirect:/request/";	
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("api/all")
 	public @ResponseBody Iterable<Request> allRequest() {
 		return requestRepository.findAll();
+	}
+	
+	@GetMapping("api/countByStatus")
+	public @ResponseBody Iterable<Long> countByStatus(@RequestParam("status") String status) {
+		return requestRepository.countByStatus(status);
+	}
+
+	@GetMapping("api/totalCount") 
+	public @ResponseBody Iterable<Long> totalCount() {
+		return requestRepository.totalCount();
+	}
+	
+	@GetMapping("api/findByStatus")
+	public @ResponseBody Iterable<Request> findByStatus(@RequestParam("status") String status) {			
+		return requestRepository.findByStatus(status);		
+	}
+	
+	@GetMapping("api/countByMonth")
+	public @ResponseBody Iterable<Integer> countByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
+		return requestRepository.countByMonth(month, year);
 	}
 }
