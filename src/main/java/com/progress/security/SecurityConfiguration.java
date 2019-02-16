@@ -12,9 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
-	private final String SQL_LOGIN  = "select login, password, active from progress.user where login = ?";
+	private final String SQL_LOGIN  = "select login, password, active from users where login = ?";
 	
-	private final String SQL_PERMITION = "select u.login, p.description from user_permition up inner join user u on u.id = up.users_id inner join permition p on p.id = up.permition_id where u.login = ?";
+	private final String SQL_PERMITION = "select u.login, p.description from users_permition up inner join users u on u.id = up.users_id inner join permition p on p.id = up.permition_id where u.login = ?";
 	
 //	private final String SQL_GROUP = "select g.id, g.description, p.description from grupo_permition gp \n" + 
 //			"inner join grupo g on g.id = gp.groups_id \n" + 
