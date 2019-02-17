@@ -113,7 +113,7 @@ public class ScreenController {
 		return "redirect:/screen/";		
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/form/delete/{id}")
 	public String deleteScreen(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
 		

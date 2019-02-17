@@ -1,147 +1,115 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{menu.html}">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" th:href="@{/resources/css/bootstrap.css}"/>
-
-  <link rel="stylesheet" th:href="@{/resources/css/style.css}">
-  <script type="text/javascript" th:src="@{/resources/js/jquery-3.3.1.min.js}"></script>
-  <script type="text/javascript" th:src="@{/resources/js/script.js}"></script>
-  <script type="text/javascript" th:src="@{/resources/js/bootstrap.min.js}"></script>
+  	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3b85b4;">
-	  <a class="navbar-brand" href="#">Progress</a>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="http://localhost:8080/request/">Chamados</a>
-	      </li>
-	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Cadastros
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="dropdown-item" href="http://localhost:8080/client/">Clientes</a>
-	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="http://localhost:8080/screen/">Telas</a>
-	        </div>
-	      </li>
-	    </ul>
-	  </div>
-	</nav>
-
-	<div class="row header rounded">
+	<div layout:fragment="content">
+	  <div class="row header rounded">
 		<div class="col-md header-title">
 	    	<label>Screen</label>
 	    </div>
-
-	    <div class="col-md input-group header-input flex-column">
-	    	<form class="db-search d-flex" style="width:50%;">
-	    		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">
-	    	</form>
-	    </div>
-   	</div>
-
-  <div class="screen">
-    <div class="col-12 col-sm-12 db-content default-table table-wrapper-scroll-y">
-      <table id="scroll" class="table-sm">
-        <thead>
-          <tr role="row">
-            <th class="col-1 th-sm" scope="col">ID</th>
-            <th class="col-2 th-sm" scope="col">Name</th>
-            <th class="col-7 th-sm" scope="col">Description</th>
-            <th class="col-1 th-sm" scope="col"></th>
-            <th class="col-1 th-sm" scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="row-screen" th:each="screen : ${screen}">
-            <td th:text="${screen.ScreenId}"></td>
-            <td class="screen-name" th:text="${screen.screenName}"></td>
-            <td th:text="${screen.screenDescription}"></td>
-            <td><button type="button" class="btn-sm btn btn-primary btn-edit" style="width:70px;">Edit</button></td>
-            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <a href="http://localhost:8080/screen/form/add/" class="float-button-new">
-      <i class="fa fa-plus my-float"></i><img th:src="@{/resources/img/plus.png}" height="60px">
-    </a>
-  </div>
-
-   <!-- Modal -->
-	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        Do you really want to delete?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary btn-delete-confirm">Delete</button>
-	      </div>
-	    </div>
+		   <div class="col-md input-group header-input flex-column">
+		   	<form class="db-search d-flex" style="width:50%;">
+		   		<input id="inputSearch" class="form-control ds-input" type="text" onkeyup="search()" placeholder="Search here">
+		  	</form>
+		  </div>
 	  </div>
-	</div>
 
-
-  <script type="text/javascript" >
-  	var id;
-
-    $("tr").click(function() {
-	  //adiciona classe selected na linha
-	  $(this).addClass('selected-row').siblings().removeClass('selected-row');
-	});
-
-	$("tbody tr").dblclick(function() {
-	  window.open("http://localhost:8080/screen/form/update/" + $(this).find("td:first").html(), "_self");
-	});
-
-    $(".btn-edit").click(function(){
-    	window.open("http://localhost:8080/screen/form/update/" + $(this).closest('tr').find('td:first').html(), "_self")
-    });	
-    
-	$(".btn-delete").click(function(){
- 	  id = $(this).closest('tr').find('td:first').html();
-	});
-
-	$(".btn-delete-confirm").click(function(){
-		window.open("http://localhost:8080/screen/delete/" + id, "_self");
-	});
-
-	function search() {
-		var input, filter,td;
-		input = document.getElementById("inputSearch");
-		console.log(input.value);
-
-		td = document.getElementsByClassName("screen-name");
-
-		for (i = 0; i < td.length; i++){
-			if (td[i].innerHTML.toUpperCase().indexOf(input.value.toUpperCase()) != -1) {
-				td[i].closest('tr').style.display = "";
-			}
-			else {
-				td[i].closest('tr').style.display = "none";
+	  <div class="screen">
+	    <div class="col-12 col-sm-12 db-content default-table table-wrapper-scroll-y">
+	      <table id="scroll" class="table-sm">
+	        <thead>
+	          <tr role="row">
+	            <th class="col-1 th-sm" scope="col">ID</th>
+	            <th class="col-2 th-sm" scope="col">Name</th>
+	            <th class="col-7 th-sm" scope="col">Description</th>
+	            <th class="col-1 th-sm" scope="col"></th>
+	            <th class="col-1 th-sm" scope="col"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <tr id="row-screen" th:each="screen : ${screen}">
+	            <td th:text="${screen.ScreenId}"></td>
+	            <td class="screen-name" th:text="${screen.screenName}"></td>
+	            <td th:text="${screen.screenDescription}"></td>
+	            <td><button type="button" class="btn-sm btn btn-primary btn-edit" style="width:70px;">Edit</button></td>
+	            <td><button type="button" class="btn-sm btn btn-danger btn-delete" style="width:70px;" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+	          </tr>
+	        </tbody>
+	      </table>
+	    </div>
+	
+	    <a th:href="@{/screen/form/add/}" class="float-button-new">
+	      <i class="fa fa-plus my-float"></i><img th:src="@{/resources/img/plus.png}" height="60px">
+	    </a>
+	  </div>
+	
+	   <!-- Modal -->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        Do you really want to delete?
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary btn-delete-confirm">Delete</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
+	
+	  <script type="text/javascript" >
+	  	var id;
+	
+	    $("tr").click(function() {
+		  //adiciona classe selected na linha
+		  $(this).addClass('selected-row').siblings().removeClass('selected-row');
+		});
+	
+		$("tbody tr").dblclick(function() {
+		  window.open(window.location + "form/update/" + $(this).find("td:first").html(), "_self");
+		});
+	
+	    $(".btn-edit").click(function(){
+	    	window.open(window.location + "form/update/" + $(this).closest('tr').find('td:first').html(), "_self")
+	    });	
+	    
+		$(".btn-delete").click(function(){
+	 	  id = $(this).closest('tr').find('td:first').html();
+		});
+	
+		$(".btn-delete-confirm").click(function(){
+			window.open(window.location + "form/delete/" + id, "_self");
+		});
+	
+		function search() {
+			var input, filter,td;
+			input = document.getElementById("inputSearch");
+			console.log(input.value);
+	
+			td = document.getElementsByClassName("screen-name");
+	
+			for (i = 0; i < td.length; i++){
+				if (td[i].innerHTML.toUpperCase().indexOf(input.value.toUpperCase()) != -1) {
+					td[i].closest('tr').style.display = "";
+				}
+				else {
+					td[i].closest('tr').style.display = "none";
+				}
 			}
 		}
-	}
-  </script>
+	  </script>
+  </div>
 </body>
 </html>

@@ -134,7 +134,7 @@ public class ClientController {
 		return "redirect:/client/";		
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/form/delete/{id}")
 	public String removeClient(@PathVariable("id") int id) {
 		clientRepository.deleteById(id);
 		

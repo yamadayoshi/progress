@@ -105,6 +105,13 @@ public class RequestController {
 		return "redirect:/request/"; 		
 	}
 	
+	@GetMapping("form/delete/{id}")
+	public String deleteFormRequest(@PathVariable("id") int id) {
+		requestRepository.deleteById(id);
+		
+		return "redirect:/request/";
+	}
+	
 	@GetMapping("api/add")
 	public String addRequest(@RequestParam String title, @RequestParam String clientDescription, @RequestParam String devDescription, @RequestParam int clientId, @RequestParam int screenId) {
 		Request request = new Request();
