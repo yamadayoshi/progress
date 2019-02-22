@@ -90,7 +90,7 @@ public class ClientController {
 		return "redirect:/client/";
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("/api/add")
 	public String addClient(@RequestParam String name, @RequestParam String cpf, @RequestParam String email, @RequestParam String phone) {
 		Client client = new Client();
 		client.setClientName(name);
@@ -103,7 +103,7 @@ public class ClientController {
 		return "redirect:/client/";
 	}
 	
-	@GetMapping("/update/{id}") 
+	@GetMapping("/api/update/{id}") 
 	public String updateClient(@PathVariable("id") int id,  @RequestParam(required=false) String name, @RequestParam(required=false) String cpf, @RequestParam(required=false) String email, @RequestParam(required=false) String phone) {
 		Optional<Client> updateClient = clientRepository.findById(id);		
 		
