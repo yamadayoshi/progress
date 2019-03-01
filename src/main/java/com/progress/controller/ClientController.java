@@ -131,7 +131,7 @@ public class ClientController {
 		
 		clientRepository.save(client);
 		
-		return "redirect:/client/";		
+		return "redirect:/client/api/findById?id="+id;		
 	}
 	
 	@GetMapping("/form/delete/{id}")
