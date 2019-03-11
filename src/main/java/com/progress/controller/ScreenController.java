@@ -145,7 +145,7 @@ public class ScreenController {
 		
 		screenRepository.save(screen);
 		
-		return "/screen/api/findById" + id;
+		return "/screen/api/findById/" + id;
 	}
 	
 	@GetMapping("/api/delete/{id}")
