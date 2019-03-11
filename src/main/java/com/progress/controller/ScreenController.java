@@ -128,11 +128,11 @@ public class ScreenController {
 		
 		screenRepository.save(screen);
 		
-		return "redirect:/screen";
+		return "redirect:/screen/";
 	}
 	
 	@GetMapping("/api/update/{id}")
-	public String updateScreenApi(@PathVariable("id") int id, @RequestParam String name, @RequestParam String description) {
+	public String updateScreenApi(@PathVariable("id") int id, @RequestParam String name, @RequestParam(required=false) String description) {
 		Optional<Screen> screenUpdate = screenRepository.findById(id);
 		
 		Screen screen = screenUpdate.get();
@@ -154,7 +154,7 @@ public class ScreenController {
 	public String deleteScreenApi(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
 		
-		return "redirect:/screen";
+		return "redirect:/screen/";
 	}
 	
 	@GetMapping("/api/findById/{id}")
