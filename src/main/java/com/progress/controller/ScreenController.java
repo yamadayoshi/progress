@@ -121,14 +121,12 @@ public class ScreenController {
 	}
 	
 	@GetMapping("/api/add") 
-	public String addScreenApi(@RequestParam(required=true) String name, @RequestParam(required=true) String description){
+	public void addScreenApi(@RequestParam(required=true) String name, @RequestParam(required=true) String description){
 		Screen screen = new Screen();
 		screen.setScreenName(name);
 		screen.setScreenDescription(description);
 		
 		screenRepository.save(screen);
-		
-		return "redirect:/screen/";
 	}
 	
 	@GetMapping("/api/update/{id}")
@@ -147,7 +145,7 @@ public class ScreenController {
 		
 		screenRepository.save(screen);
 		
-		return "/screen/api/findById=" + id;
+		return "/screen/api/findById" + id;
 	}
 	
 	@GetMapping("/api/delete/{id}")
