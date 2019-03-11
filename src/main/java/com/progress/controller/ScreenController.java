@@ -120,8 +120,42 @@ public class ScreenController {
 		return "redirect:/screen/";
 	}
 	
-	@GetMapping("/all")
+	@GetMapping("/api/add") 
+	public String addScreenApi(@RequestParam(required=true) String name, @RequestParam(required=true) String description){
+		Screen screen = new Screen();
+		screen.setScreenName(name);
+		screen.setScreenDescription(description);
+		
+		screenRepository.save(screen);
+		
+		return "redirect:/screen/";
+	}
+	
+	@GetMapping("/api/update/{id}")
+	public void updateScreenApi(@PathVariable("id") int id, @RequestParam String name, @RequestParam String description) {
+		Optional<Screen> screen = screenRepository.findById(id);
+		
+		Screen screenUpdate = screen.get();
+		
+		if (name != null) {
+			screenUpdate.setScreenName(name);
+		}
+		
+		if (description != null) {
+			screenUpdate.setScreenDescription(description);	
+		}		
+		
+		screenRepository.save(screenUpdate);
+	}
+	
+	@GetMapping("/api/delete/{id}")
+	public void deleteScreenApi(@PathVariable("id") int id) {
+		screenRepository.deleteById(id);
+	}
+	
+	
+	@GetMapping("/api/all")
 	public @ResponseBody Iterable<Screen> allScreen() {
 		return screenRepository.findAll();
-	}
+	}	
 }
