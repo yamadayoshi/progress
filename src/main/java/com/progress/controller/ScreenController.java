@@ -132,25 +132,32 @@ public class ScreenController {
 	}
 	
 	@GetMapping("/api/update/{id}")
-	public void updateScreenApi(@PathVariable("id") int id, @RequestParam String name, @RequestParam String description) {
-		Optional<Screen> screen = screenRepository.findById(id);
+	public String updateScreenApi(@PathVariable("id") int id, @RequestParam String name, @RequestParam String description) {
+		Optional<Screen> screenUpdate = screenRepository.findById(id);
 		
-		Screen screenUpdate = screen.get();
+		Screen screen = screenUpdate.get();
 		
 		if (name != null) {
-			screenUpdate.setScreenName(name);
+			screen.setScreenName(name);
 		}
 		
 		if (description != null) {
-			screenUpdate.setScreenDescription(description);	
+			screen.setScreenDescription(description);	
 		}		
 		
-		screenRepository.save(screenUpdate);
+		screenRepository.save(screen);
+		
+		return "/screen/api/findById=" + id;
 	}
 	
 	@GetMapping("/api/delete/{id}")
 	public void deleteScreenApi(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
+	}
+	
+	@GetMapping("/api/findById/{id}")
+	public @ResponseBody Optional<Screen> findByIdScreen(@PathVariable("id") int id) {
+		return screenRepository.findById(id);
 	}
 	
 	
