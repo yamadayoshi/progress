@@ -48,14 +48,10 @@ public class RequestController {
 		return "request";
 	}
 	
-//	@PostMapping(value="/")
-//	public String postHomeRequest() {
-//		
-//	}
-	
 	@GetMapping("/form/add")
 	public String getAddFormRequest(Model model) {
 		Request request = new Request();
+		
 		Iterable<Client> clientList = new ArrayList<>();
 		Iterable<Screen> screenList = new ArrayList<>();
 		
@@ -72,9 +68,12 @@ public class RequestController {
 		return "request_register";
 	}
 	
-	@PostMapping(value="/form/add")
-	public String postAddFormRequest(@ModelAttribute("request") Request request) {
+	@PostMapping("/form/add")
+	public String postAddFormRequest(HttpServletRequest serveletRequest, @ModelAttribute("request") Request request) {
 		requestRepository.save(request);
+		
+		// clean attr
+		serveletRequest.getSession().setAttribute("request", null);
 		
 		return "redirect:/request/";
 	}
@@ -105,15 +104,15 @@ public class RequestController {
 		return "redirect:/request/"; 		
 	}
 	
-	@GetMapping("form/delete/{id}")
+	@GetMapping("/form/delete/{id}")
 	public String deleteFormRequest(@PathVariable("id") int id) {
 		requestRepository.deleteById(id);
 		
 		return "redirect:/request/";
 	}
 	
-	@GetMapping("api/add")
-	public String addRequest(@RequestParam String title, @RequestParam String clientDescription, @RequestParam String devDescription, @RequestParam int clientId, @RequestParam int screenId) {
+	@GetMapping("/api/add")
+	public String addApiRequest(@RequestParam String title, @RequestParam String clientDescription, @RequestParam String devDescription, @RequestParam int clientId, @RequestParam int screenId) {
 		Request request = new Request();
 		request.setRequestTitle(title);
 		request.setRequestClientDescription(clientDescription);		
@@ -125,11 +124,11 @@ public class RequestController {
 		
 		requestRepository.save(request);
 		
-		return "screen";
+		return "redirect:/request/api/all";
 	}
 	
-	@GetMapping("api/update/{id}")
-	public String updateRequest(@PathVariable("id") int id, @RequestParam(required=false) String title, @RequestParam(required=false) String clientDescription, @RequestParam(required=false) String devDescription, @RequestParam(required=false) String clientId, @RequestParam(required=false) String screenId) {
+	@GetMapping("/api/update/{id}")
+	public String updateApiRequest(@PathVariable("id") int id, @RequestParam(required=false) String title, @RequestParam(required=false) String clientDescription, @RequestParam(required=false) String devDescription, @RequestParam(required=false) String clientId, @RequestParam(required=false) String screenId) {
 		// recupera o request
 		Optional<Request> updateRequest = requestRepository.findById(id);		
 		
@@ -162,37 +161,42 @@ public class RequestController {
 		
 		requestRepository.save(request);
 		
-		return "redirect:/request/";
-	}
+		return "redirect:/request/api/findById/" + id;
+	}	
 	
-	@GetMapping("api/delete/{id}")
+	@GetMapping("/api/delete/{id}")
 	public String deleteRequest(@PathVariable("id") int id) {
 		requestRepository.deleteById(id);
 		
-		return "redirect:/request/";	
+		return "redirect:/request/api/all";	
 	}
 	
-	@GetMapping("api/all")
+	@GetMapping("/api/findById/{id}")
+	public @ResponseBody Optional<Request> findById(@PathVariable("id") int id) {
+		return requestRepository.findById(id);
+	}
+	
+	@GetMapping("/api/all")
 	public @ResponseBody Iterable<Request> allRequest() {
 		return requestRepository.findAll();
 	}
 	
-	@GetMapping("api/countByStatus")
+	@GetMapping("/api/countByStatus")
 	public @ResponseBody Iterable<Long> countByStatus(@RequestParam("status") String status) {
 		return requestRepository.countByStatus(status);
 	}
 
-	@GetMapping("api/totalCount") 
+	@GetMapping("/api/totalCount") 
 	public @ResponseBody Iterable<Long> totalCount() {
 		return requestRepository.totalCount();
 	}
 	
-	@GetMapping("api/findByStatus")
+	@GetMapping("/api/findByStatus")
 	public @ResponseBody Iterable<Request> findByStatus(@RequestParam("status") String status) {			
 		return requestRepository.findByStatus(status);		
 	}
 	
-	@GetMapping("api/countByMonth")
+	@GetMapping("/api/countByMonth")
 	public @ResponseBody Iterable<Integer> countByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
 		return requestRepository.countByMonth(month, year);
 	}

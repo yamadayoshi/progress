@@ -39,8 +39,6 @@ public class ScreenController {
 		return "screen";
 	}
 	
-	// to do post /screen 
-	
 	@GetMapping("/form/add")
 	public String getAddFormScreen(Model model) {
 		Screen screen = new Screen();
@@ -54,7 +52,6 @@ public class ScreenController {
 	public String postAddFormScreen(HttpServletRequest request, @ModelAttribute("screen") Screen screen) {
 		screenRepository.save(screen);
 		
-		//clean 
 		request.getSession().setAttribute("screen", null);
 		
 		return "redirect:/screen/";		
@@ -80,39 +77,6 @@ public class ScreenController {
 		return "redirect:/screen/";		
 	}	
 	
-	
-	@GetMapping("/add")
-	public String addScreen(@RequestParam String name, @RequestParam String description) {
-		Screen screen = new Screen();
-		screen.setScreenName(name);
-		screen.setScreenDescription(description);
-		
-		screenRepository.save(screen);
-		
-		return "redirect:/screen/";
-	}
-	
-	@GetMapping("/update/{id}")
-	public String updateScreen(@PathVariable("id") int id, @RequestParam(required=false) String name, @RequestParam(required=false) String description) {
-		Optional<Screen> updateScreen = screenRepository.findById(id);
-		
-		Screen screen = updateScreen.get();		
-		
-		if (name != null)  
-			screen.setScreenName(name);
-		else
-			screen.setScreenName(screen.getScreenName());
-		
-		if(description != null)
-			screen.setScreenDescription(description);
-		else
-			screen.setScreenDescription(screen.getScreenDescription());
-
-		screenRepository.save(screen);
-		
-		return "redirect:/screen/";		
-	}
-	
 	@GetMapping("/form/delete/{id}")
 	public String deleteScreen(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
@@ -128,7 +92,7 @@ public class ScreenController {
 		
 		screenRepository.save(screen);
 		
-		return "redirect:/screen/";
+		return "redirect:/screen/api/all";
 	}
 	
 	@GetMapping("/api/update/{id}")
@@ -137,13 +101,15 @@ public class ScreenController {
 		
 		Screen screen = screenUpdate.get();
 		
-		if (name != null) {
+		if (name != null)  
 			screen.setScreenName(name);
-		}
+		else
+			screen.setScreenName(screen.getScreenName());
 		
-		if (description != null) {
-			screen.setScreenDescription(description);	
-		}		
+		if(description != null)
+			screen.setScreenDescription(description);
+		else
+			screen.setScreenDescription(screen.getScreenDescription());	
 		
 		screenRepository.save(screen);
 		
@@ -154,14 +120,13 @@ public class ScreenController {
 	public String deleteScreenApi(@PathVariable("id") int id) {
 		screenRepository.deleteById(id);
 		
-		return "redirect:/screen/";
+		return "redirect:/screen/api/all";		
 	}
 	
 	@GetMapping("/api/findById/{id}")
 	public @ResponseBody Optional<Screen> findByIdScreen(@PathVariable("id") int id) {
 		return screenRepository.findById(id);
-	}
-	
+	}	
 	
 	@GetMapping("/api/all")
 	public @ResponseBody Iterable<Screen> allScreen() {

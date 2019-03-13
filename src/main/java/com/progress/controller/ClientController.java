@@ -41,7 +41,7 @@ public class ClientController {
 		return "client";
 	}
 	
-	@PostMapping(value="/")
+	@PostMapping("/")
 	public String postHomeClient(@Valid Client client, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			clientRepository.save(client);
@@ -90,8 +90,15 @@ public class ClientController {
 		return "redirect:/client/";
 	}
 	
+	@GetMapping("/form/delete/{id}")
+	public String getDeleteFormClient(@PathVariable("id") int id) {
+		clientRepository.deleteById(id);
+		
+		return "redirect:/client/";
+	}	
+	
 	@GetMapping("/api/add")
-	public String addClient(@RequestParam String name, @RequestParam String cpf, @RequestParam String email, @RequestParam String phone) {
+	public String addApiClient(@RequestParam String name, @RequestParam String cpf, @RequestParam String email, @RequestParam String phone) {
 		Client client = new Client();
 		client.setClientName(name);
 		client.setClientCnpjCpf(cpf);
@@ -100,11 +107,11 @@ public class ClientController {
 		
 		clientRepository.save(client);
 		
-		return "redirect:/client/";
+		return "redirect:/client/api/all";
 	}
 	
 	@GetMapping("/api/update/{id}") 
-	public String updateClient(@PathVariable("id") int id,  @RequestParam(required=false) String name, @RequestParam(required=false) String cpf, @RequestParam(required=false) String email, @RequestParam(required=false) String phone) {
+	public String updateApiClient(@PathVariable("id") int id,  @RequestParam(required=false) String name, @RequestParam(required=false) String cpf, @RequestParam(required=false) String email, @RequestParam(required=false) String phone) {
 		Optional<Client> updateClient = clientRepository.findById(id);		
 		
 		Client client = updateClient.get();
@@ -134,16 +141,15 @@ public class ClientController {
 		return "redirect:/client/api/findById?id="+id;		
 	}
 	
-	@GetMapping("/form/delete/{id}")
-	public String removeClient(@PathVariable("id") int id) {
+	@GetMapping("/api/delete/{id}")
+	public String deleteApiClient(@PathVariable("id") int id) {
 		clientRepository.deleteById(id);
 		
-		return "redirect:/client/";
+		return "redirect:/client/api/all"; 
 	}
 	
 	@GetMapping("/api/all")
-	public @ResponseBody Iterable<Client> allClient() {
-	
+	public @ResponseBody Iterable<Client> allClient() {	
 		return clientRepository.findAll();
 	}
 	
