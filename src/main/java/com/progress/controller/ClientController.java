@@ -158,8 +158,8 @@ public class ClientController {
 		return clientRepository.totalCount();
 	}
 	
-	@GetMapping("/api/findById")
-	public @ResponseBody Iterable<Client> finByClientId(@RequestParam int id) {
+	@GetMapping("/api/findById/{id}")
+	public @ResponseBody Iterable<Client> finByClientId(@PathVariable("id") int id) {
 		return clientRepository.findByClientId(id);
 	}
 	
