@@ -15,7 +15,7 @@ public class Screen {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="screen_id")
-	private int ScreenId;	
+	private int screenId;	
 	
 	@Column(name="screen_name", length=50)
 	private String screenName;	
@@ -33,10 +33,10 @@ public class Screen {
 	}
 	
 	public int getScreenId() {
-		return ScreenId;
+		return screenId;
 	}
 	public void setScreenId(int screenId) {
-		ScreenId = screenId;
+		this.screenId = screenId;
 	}
 	public String getScreenName() {
 		return screenName;
