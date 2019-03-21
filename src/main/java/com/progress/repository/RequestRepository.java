@@ -10,6 +10,8 @@ import com.progress.model.Request;
 
 public interface RequestRepository extends CrudRepository<Request, Integer> {
 	
+	Iterable<Request> findByRequestId(int id);
+	
 	List<Request> findByStatus(String status);
 	
 	@Query("SELECT count(*) as qtd FROM Request r WHERE r.status=:status")

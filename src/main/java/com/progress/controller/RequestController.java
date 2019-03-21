@@ -172,8 +172,8 @@ public class RequestController {
 	}
 	
 	@GetMapping("/api/findById/{id}")
-	public @ResponseBody Optional<Request> findById(@PathVariable("id") int id) {
-		return requestRepository.findById(id);
+	public @ResponseBody Iterable<Request> findById(@PathVariable("id") int id) {
+		return requestRepository.findByRequestId(id);
 	}
 	
 	@GetMapping("/api/all")
