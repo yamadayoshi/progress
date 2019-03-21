@@ -124,8 +124,8 @@ public class ScreenController {
 	}
 	
 	@GetMapping("/api/findById/{id}")
-	public @ResponseBody Optional<Screen> findByIdScreen(@PathVariable("id") int id) {
-		return screenRepository.findById(id);
+	public @ResponseBody Iterable<Screen> findById(@PathVariable("id") int id) {
+		return screenRepository.findByScreenId(id);
 	}	
 	
 	@GetMapping("/api/all")
