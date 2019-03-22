@@ -128,7 +128,7 @@ public class RequestController {
 	}
 	
 	@GetMapping("/api/update/{id}")
-	public String updateApiRequest(@PathVariable("id") int id, @RequestParam(required=false) String title, @RequestParam(required=false) String clientDescription, @RequestParam(required=false) String devDescription, @RequestParam(required=false) String clientId, @RequestParam(required=false) String screenId) {
+	public String updateApiRequest(@PathVariable("id") int id, @RequestParam(required=false) String title, @RequestParam(required=false) String clientDescription, @RequestParam(required=false) String devDescription, @RequestParam(required=false) String status, @RequestParam(required=false) String clientId, @RequestParam(required=false) String screenId) {
 		// recupera o request
 		Optional<Request> updateRequest = requestRepository.findById(id);		
 		
@@ -148,6 +148,11 @@ public class RequestController {
 			request.setRequestDevDescription(devDescription);
 		else
 			request.setRequestDevDescription(request.getRequestDevDescription());
+		
+		if (status != null) 
+			request.setStatus(status);
+		else
+			request.setStatus(request.getStatus());
 		
 		if (clientId != null)		
 			request.setRequestClient(new Client(Integer.parseInt(clientId)));
