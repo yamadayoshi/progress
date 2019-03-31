@@ -34,6 +34,9 @@ public class User implements Serializable {
 	@Column(name="register_date", columnDefinition="DATETIME default CURRENT_TIMESTAMP")
 	private LocalDateTime registerDate;
 	
+	@Column(length=50)
+	private String token;
+	
 	// create table user_permissions
 	@ManyToMany
 	private List<Permition>	permition;
@@ -82,6 +85,14 @@ public class User implements Serializable {
 
 	public void setRegisterDate(LocalDateTime registerDate) {
 		this.registerDate = registerDate;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public boolean isActive() {
