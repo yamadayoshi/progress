@@ -14,6 +14,9 @@ public interface RequestRepository extends CrudRepository<Request, Integer> {
 	
 	List<Request> findByStatus(String status);
 	
+	@Query(nativeQuery=true, value="SELECT * FROM Request  ORDER BY request_entry_date desc limit 5")
+	Iterable<Request> findLastRequest();
+	
 	@Query("SELECT count(*) as qtd FROM Request r WHERE r.status=:status")
 	List<Long> countByStatus(@Param("status") String status);
 	

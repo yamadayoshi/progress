@@ -205,4 +205,9 @@ public class RequestController {
 	public @ResponseBody Iterable<Integer> countByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
 		return requestRepository.countByMonth(month, year);
 	}
+	
+	@GetMapping("/api/lastRequests")
+	public @ResponseBody Iterable<Request> getLastRequest() {
+		return requestRepository.findLastRequest();
+	}
 }
