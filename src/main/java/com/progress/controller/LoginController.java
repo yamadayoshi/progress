@@ -2,18 +2,19 @@ package com.progress.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/login")
 public class LoginController {
 
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String getLogin() {
 		return "login";
 	}	
 	
-	@GetMapping("/") 
+	@PostMapping("/")
 	public String postLogin(){
 		return "redirect:/client/";
 	}
